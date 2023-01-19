@@ -1,0 +1,12 @@
+{
+  "name": "authserver",
+  "version": "1.0.0",
+  "description": "Api to auth users",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "dannyteofilo",
+  "license": "ISC"
+}
