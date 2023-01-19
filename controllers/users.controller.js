@@ -1,6 +1,7 @@
 const { response, request } = require("express");
 const User = require("../models/user");
 const bcryptJs = require("bcryptjs");
+const {generateToken}=require('../helpers/common')
 
 const usersGet = async (req = request, res = response) => {
   const { limit, from } = req.query;
@@ -22,7 +23,14 @@ const usersPost = async (req, res = response) => {
 
   // save
   await user.save();
-  res.json({ msg: "POST API -controller", user });
+  const data = {
+    name: user.name,
+    email: user.email,
+    role: user.role,
+    active: user.active,
+  }
+  const token = await generateToken({ data })
+  res.json({user,token });
 };
 
 const usersPut = async (req, res = response) => {
