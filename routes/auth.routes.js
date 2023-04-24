@@ -1,7 +1,7 @@
-    const { Router } = require("express");
-const { check } = require("express-validator");
-const { login } = require("../controllers/auth.controller");
-const { validRequest } = require("../middlewares/valid-data");
+import { Router } from "express";
+import { check } from "express-validator";
+import { login } from "../controllers/auth.controller.js";
+import { validRequest } from "../middlewares/valid-data.js";
 
 const router = Router();
 
@@ -15,4 +15,4 @@ router.post(
   login
 );
 
-module.exports = router;
+export default router;
