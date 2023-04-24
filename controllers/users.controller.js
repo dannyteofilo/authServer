@@ -1,9 +1,9 @@
-const { response, request } = require("express");
-const User = require("../models/user");
-const bcryptJs = require("bcryptjs");
-const {generateToken}=require('../helpers/common')
+import { response, request } from "express";
+import User from "../models/user.js";
+import bcryptJs from "bcryptjs";
+import { generateToken } from "../helpers/common.js";
 
-const usersGet = async (req = request, res = response) => {
+export const usersGet = async (req = request, res = response) => {
   const { limit, from } = req.query;
 
   const [total, users] = await Promise.all([
@@ -13,7 +13,7 @@ const usersGet = async (req = request, res = response) => {
   res.json({ total, users });
 };
 
-const usersPost = async (req, res = response) => {
+export const usersPost = async (req, res = response) => {
   const { name, email, password, role } = req.body;
   const user = new User({ name, email, password, role });
 
@@ -28,12 +28,12 @@ const usersPost = async (req, res = response) => {
     email: user.email,
     role: user.role,
     active: user.active,
-  }
-  const token = await generateToken({ data })
-  res.json({user,token });
+  };
+  const token = await generateToken({ data });
+  res.json({ user, token });
 };
 
-const usersPut = async (req, res = response) => {
+export const usersPut = async (req, res = response) => {
   const { id } = req.params;
   const { _id, password, google, email, ...rest } = req.body;
   // Todo Validar contra base de datos
@@ -47,16 +47,9 @@ const usersPut = async (req, res = response) => {
   res.json(userDB);
 };
 
-const usersDelete = async (req, res = response) => {
+export const usersDelete = async (req, res = response) => {
   // const user=await User.findByIdAndDelete(id)
   const { id } = req.params;
   const user = await User.findByIdAndUpdate(id, { status: false });
   res.json(user);
-};
-
-module.exports = {
-  usersGet,
-  usersPost,
-  usersPut,
-  usersDelete,
 };

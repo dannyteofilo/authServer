@@ -1,16 +1,8 @@
-const { Router } = require("express");
-const { check } = require("express-validator");
-
-const {
-  usersGet,
-  usersPost,
-  usersDelete,
-  usersPut,
-} = require("../controllers/users.controller");
-
-const { existEmailValid, existUserId } = require("../helpers/db-validators");
-
-const { validRequest } = require("../middlewares/valid-data");
+import { Router } from "express";
+import { check } from "express-validator";
+import { usersGet, usersPost, usersDelete, usersPut } from "../controllers/users.controller.js";
+import { existEmailValid, existUserId } from "../helpers/db-validators.js";
+import { validRequest } from "../middlewares/valid-data.js";
 
 const router = Router();
 
@@ -48,4 +40,4 @@ router.delete(
   usersDelete
 );
 
-module.exports = router;
+export default router;

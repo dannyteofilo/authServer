@@ -1,9 +1,9 @@
-const { response } = require("express");
-const User = require("../models/user");
-const bcryptjs = require("bcryptjs");
-const { generateToken } = require("../helpers/common");
+import { response } from "express";
+import User from "../models/user.js";
+import bcryptjs from "bcryptjs";
+import { generateToken } from "../helpers/common.js";
 
-const login = async (req, res = response) => {
+export const login = async (req, res = response) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
@@ -19,32 +19,28 @@ const login = async (req, res = response) => {
       });
 
     if (!user.status)
-      return res
-        .status(400)
-        .json({
-            errors: {
-              errors: [
-                {
-                  msg: "user or password not exist - status: not found",
-                },
-              ],
+      return res.status(400).json({
+        errors: {
+          errors: [
+            {
+              msg: "user or password not exist - status: not found",
             },
-          });
+          ],
+        },
+      });
 
     const validPassword = bcryptjs.compareSync(password, user.password);
 
     if (!validPassword)
-      return res
-        .status(400)
-        .json({
-            errors: {
-              errors: [
-                {
-                  msg: "user or password is incorrect",
-                },
-              ],
+      return res.status(400).json({
+        errors: {
+          errors: [
+            {
+              msg: "user or password is incorrect",
             },
-          });
+          ],
+        },
+      });
     const data = {
       name: user.name,
       email: user.email,
@@ -58,6 +54,3 @@ const login = async (req, res = response) => {
   }
 };
 
-module.exports = {
-  login,
-};
