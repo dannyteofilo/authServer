@@ -9,7 +9,7 @@ export const login = async (req, res = response) => {
     const user = await User.findOne({ email });
     if (!user)
       return res.status(400).json({
-        errors: {
+        error: {
           errors: [
             {
               msg: "user or password not exist - status: not found",
@@ -20,7 +20,7 @@ export const login = async (req, res = response) => {
 
     if (!user.status)
       return res.status(400).json({
-        errors: {
+        error: {
           errors: [
             {
               msg: "user or password not exist - status: not found",
@@ -33,7 +33,7 @@ export const login = async (req, res = response) => {
 
     if (!validPassword)
       return res.status(400).json({
-        errors: {
+        error: {
           errors: [
             {
               msg: "user or password is incorrect",
