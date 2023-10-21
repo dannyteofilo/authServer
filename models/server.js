@@ -1,9 +1,9 @@
-
 import express from "express";
 import cors from "cors";
 import { dbConnection } from "../database/config.js";
 import userRotes from "../routes/user.routes.js";
 import authroutes from "../routes/auth.routes.js";
+import todoRoutes from "../routes/todo.routes.js";
 
 class Server {
   constructor() {
@@ -11,6 +11,7 @@ class Server {
     this.port = process.env.PORT;
     this.usersPath = "/api/users";
     this.authPath = "/api/auth";
+    this.todoRoutes = "/api/todo";
 
     //Connect to database
     this.connectDB();
@@ -37,6 +38,7 @@ class Server {
   routes() {
     this.app.use(this.usersPath, userRotes);
     this.app.use(this.authPath, authroutes);
+    this.app.use(this.todoRoutes, todoRoutes);
   }
 
   listen() {
