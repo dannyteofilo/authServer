@@ -22,7 +22,7 @@ export const todosPost = async (req, res = response) => {
 
 export const todoPut = async (req, res = response) => {
   const { id } = req.params;
-  const { _id,...rest } = req.body;
+  const { _id, ...rest } = req.body;
   // Todo Validar contra base de datos
 
   const todoDB = await Todo.findByIdAndUpdate(id, rest);
@@ -32,6 +32,6 @@ export const todoPut = async (req, res = response) => {
 export const todoDelete = async (req, res = response) => {
   // const user=await User.findByIdAndDelete(id)
   const { id } = req.params;
-  const todo = await Todo.findByIdAndUpdate(id, { status: false });
+  const todo = await Todo.findByIdAndDelete({ _id: id });
   res.json(todo);
 };
